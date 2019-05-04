@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/carl12/BasketballStats#readme",
   "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.3",
     "express": "^4.16.4",
+    "mongodb": "^3.2.3",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "unirest": "^0.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
