@@ -5,7 +5,11 @@ const mongo = require('mongodb');
 const client = mongo.MongoClient;
 let leagueData;
 client.connect('mongodb://localhost:27017/', { useNewUrlParser: true }, (err, client) => {
-  console.log('mongo connect');
+  if (err) {
+    console.log(err);
+    return;
+  }
+  console.log('mongo connected');
   leagueData = client.db('NbaStats').collection('LeagueData');
 });
 
