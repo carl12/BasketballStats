@@ -5,26 +5,38 @@ const Chart = styled.div`
   background-color:${props => props.color};
   width:${props => props.width};
   height:${props => props.height}
+  border: 1px solid black;
+`;
+
+const Player = styled.div`
+  background-color:${props => props.color};
+  width:${props => props.width};
+  height:${props => props.height}
   &:hover {
     background-color:blue;
   }
+  border: 1px solid black;
 `;
 
-const ChartContainer = ({ width, height }) => {
+const ChartContainer = ({ width, height, data }) => {
+  let total = data.reduce((sum, player) => player.amount + sum, 0);
   console.log(width, height);
   return (
     <div>
       <asdf> helloo</asdf>"
-      <Chart width="220px" height="230px" color="black">
-        <Chart width={width} height={height} color="green">
-          <Chart width="190px" height="200px" color="red">a</Chart>
-          <Chart width="190px" height="100px" color="blue">b</Chart>
-          <Chart width="190px" height="50px" color="orange">c</Chart>
-          <Chart width="190px" height="50px" color="pink">d</Chart>
-      </Chart>
-      
+      <Chart width={`${width}px`} height={`${height}px`} >
+        {data.map(player => makeChart(width, height, total, player.amount, player.name))}  
       </Chart>
     </div>
 )};
 
+function makeChart(overallWidth, overallHeight, total, value, name) {
+  console.log('amount', value);
+  return <Player 
+          width={`${overallWidth * 0.9}px`} 
+          height={`${overallHeight * value/total - 2}px`}
+        >
+          {name}
+        </Player>
+}
 export default ChartContainer;
