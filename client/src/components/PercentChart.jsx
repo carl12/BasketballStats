@@ -12,7 +12,6 @@ const Player = styled.div`
   background-color:${props => props.color};
   width:${props => props.width};
   height:${props => props.height}
-  transition: all 0.2s ease-in-out;
   &:hover {
     box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
   }
@@ -45,27 +44,39 @@ class PlayerEntry extends React.Component {
       name
     } = this.props;
     const { hovered } = this.state;
+    if (attempts === 0) {
+      return <span />;
+    }
     return (
-      <Player
-        width={`${overallWidth * successes / attempts}px`}
-        height={`${overallHeight * attempts / totalAttempts - 2}px`}
-        onMouseEnter={this.onHover}
-        onMouseOut={this.offHover}
-        onBlur={this.offHover}
-      >
-        {name}
-        {hovered && `: ${Math.round(successes / attempts * 100)}%`}
-      </Player>
+      <div>
+        {attempts / totalAttempts > 0.01 
+        && (
+        <Player
+          width={`${overallWidth * successes / attempts}px`}
+          height={`${overallHeight * attempts / totalAttempts - 2}px`}
+          onMouseEnter={this.onHover}
+          onMouseOut={this.offHover}
+          onBlur={this.offHover}
+        >
+          {name}
+          {hovered && `: ${Math.round(successes / attempts * 100)}%`}
+          <div>{hovered && attempts / totalAttempts > 0.07 && `Attempts: ${attempts}`}</div>
+        </Player>
+        )
+        }
+      </div>
     );
   }
 }
 
 const ChartContainer = ({ width, height, data, teamName, statName }) => {
+
   const totalAttempts = data.reduce((sum, player) => player.attempts + sum, 0);
   const totalSuccesses = data.reduce((sum, player) => player.successes + sum, 0);
   return (
     <div>
-      {`${teamName}: ${(totalAttempts / totalSuccesses).toFixed(2)} ${statName}`}
+      {`${teamName}: ${Math.round(totalSuccesses / totalAttempts * 100)}% ${statName}`}
+      <div>{`Attempts: ${Math.round(totalAttempts)}`}</div>
       <Chart width={`${width}px`} height={`${height}px`}>
         {data.map(player => (
           <PlayerEntry

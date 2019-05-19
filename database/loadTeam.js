@@ -13,9 +13,13 @@ client.connect('mongodb://localhost:27017/', { useNewUrlParser: true }, (err, cl
 });
 
 setTimeout(() => {
-  leagueData.find({ TEAM: 'GSW' }).toArray((err, val) => {
-    const relevant = [];
-    val.forEach(player => relevant.push({ name: player.PLAYER, amount: player["REB"] }));
-    console.log(relevant);
+  leagueData.find({}).toArray((err, val) => {
+
+    const data = val.reduce((sum, player) => {
+      sum[0] += Number(player['3PA']);
+      sum[1] += Number(player['3PM']);
+      return sum;
+    }, [0, 0]);
+    console.log(data, data[1] / data[0]);
   });
 }, 1000);

@@ -12,7 +12,6 @@ const Player = styled.div`
   background-color:${props => props.color};
   width:${props => props.width};
   height:${props => props.height}
-  transition: all 0.2s ease-in-out;
   &:hover {
     box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
   }
@@ -50,7 +49,6 @@ class PlayerEntry extends React.Component {
         height={`${overallHeight * value / total - 2}px`}
         onMouseEnter={this.onHover}
         onMouseOut={this.offHover}
-        onBlur={this.offHover}
       >
         {name}
         {hovered && `: ${value}`}

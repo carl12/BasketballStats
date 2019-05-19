@@ -60,7 +60,7 @@ app.use('/api/team/:teamId/percent/:stat', (req, res) => {
 });
 
 app.get('/asdf', (req, res) => {
-  const markup = ReactDom.renderToString(React.createElement(Comp));
+  const markup = ReactDom.renderToString(<Comp />);
   const html = `
     <html>
       <body>
