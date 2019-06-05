@@ -25,7 +25,6 @@ app.use(express.static('client/public'));
 app.use('/api/team/:teamId/:stat', (req, res) => {
   const { teamId, stat } = req.params;
   
-  console.log(stat);
   leagueData.find({ TEAM: teamId }).toArray((err, val) => {
     const sLen = stat.length;
     if (stat[sLen - 1] !== '%') {
@@ -37,14 +36,12 @@ app.use('/api/team/:teamId/:stat', (req, res) => {
       const relevant = [];
       const attemptName = `${stat.slice(0, sLen - 1)}A`;
       const successName = `${stat.slice(0, sLen - 1)}M`;
-      console.log(val);
       val.forEach(player => relevant.push({
         name: player.PLAYER,
         attempts: player[attemptName],
         successes: player[successName],
       }));
       relevant.sort((a, b) => ((a.attempts < b.attempts) ? 1 : -1));
-      console.log(relevant);
       res.send(JSON.stringify(relevant));
     }
   });
@@ -73,6 +70,25 @@ app.get('/asdf', (req, res) => {
 });
 
 app.use('/team/:teamId/:stat', express.static('client/public'));
+
+const teams = [
+  'ATL', 'BKN', 'BOS', 'CHA', 'CHI', 'CLE', 'DAL', 'DEN',
+  'DET', 'GSW', 'HOU', 'IND', 'LAC', 'LAL', 'MEM', 'MIA',
+  'MIL', 'MIN', 'NOP', 'NYK', 'OKC', 'ORL', 'PHI', 'PHX',
+  'POR', 'SAC', 'SAS', 'TOR', 'UTA'];
+
+app.get('/api/team', (req, res) => {
+  res.send(JSON.stringify(teams));
+});
+
+const stats = [
+  'AGE', 'MIN', 'PTS', 'FG%25', '3P%25', 'FT%25', 'REB', 'AST',
+  'TOV', 'BLK', 'DD2', 'TD3', 'GP',
+];
+
+app.get('/api/stat', (req, res) => {
+  res.send(JSON.stringify(stats));
+});
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

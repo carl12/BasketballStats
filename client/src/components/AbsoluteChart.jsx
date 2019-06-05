@@ -40,9 +40,12 @@ class PlayerEntry extends React.Component {
       overallHeight,
       total,
       value,
-      name
+      name,
     } = this.props;
     const { hovered } = this.state;
+    if (value === 0) {
+      return <div />;
+    }
     return (
       <Player
         width={`${overallWidth  }px`}
@@ -57,7 +60,9 @@ class PlayerEntry extends React.Component {
   }
 }
 
-const ChartContainer = ({ width, height, data, teamName, statName }) => {
+const ChartContainer = ({ 
+  width, height, data, teamName, statName 
+}) => {
   const total = data.reduce((sum, player) => player.amount + sum, 0);
   return (
     <div>
@@ -74,7 +79,7 @@ const ChartContainer = ({ width, height, data, teamName, statName }) => {
         ))}
       </Chart>
     </div>
-  )
+  );
 };
 
 
