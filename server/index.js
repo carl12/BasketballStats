@@ -4,7 +4,6 @@ const mongo = require('mongodb');
 
 const React = require('react');
 const ReactDom = require('react-dom/server');
-const Comp = require('../client/src/test.jsx');
 
 const client = mongo.MongoClient;
 let leagueData;
@@ -24,8 +23,6 @@ app.use(express.static('client/public'));
 
 app.use('/api/team/:teamId/:stat', (req, res) => {
   const { teamId, stat } = req.params;
-  
-  console.log(stat);
   leagueData.find({ TEAM: teamId }).toArray((err, val) => {
     const sLen = stat.length;
     if (stat[sLen - 1] !== '%') {
@@ -37,7 +34,6 @@ app.use('/api/team/:teamId/:stat', (req, res) => {
       const relevant = [];
       const attemptName = `${stat.slice(0, sLen - 1)}A`;
       const successName = `${stat.slice(0, sLen - 1)}M`;
-      console.log(val);
       val.forEach(player => relevant.push({
         name: player.PLAYER,
         attempts: player[attemptName],
