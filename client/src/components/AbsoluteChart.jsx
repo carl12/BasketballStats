@@ -29,7 +29,7 @@ class PlayerEntry extends React.Component {
   onHover() {
     this.setState({ hovered: true });
   }
-  
+
   offHover() {
     this.setState({ hovered: false });
   }

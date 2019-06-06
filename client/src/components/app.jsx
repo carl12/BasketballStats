@@ -26,7 +26,6 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    console.log('did mount');
     const { teams, stats } = this.state;
     if (teams.length === 0) {
       fetch('/api/team')
@@ -43,7 +42,6 @@ class App extends React.Component {
 
   loadTeam() {
     const { team, stat } = this.state;
-    console.log('loading teams', team, stat);
     let url;
     if (team && stat) {
       url = `/api/team/${team}/${stat}`;
@@ -72,10 +70,9 @@ class App extends React.Component {
     const {
       team, data, stat, dataAbs, teams, stats,
     } = this.state;
-    console.log('rendering', data, dataAbs);
     return (
       <div>
-        <select onChange={e => this.setState({ team: e.target.value }, this.loadTeam)}>
+        <select onChange={e => this.setState({ team: e.target.value }, () => this.loadTeam())}>
           {teams.map(myTeam => <option value={myTeam}>{myTeam}</option>)}
         </select>
 
